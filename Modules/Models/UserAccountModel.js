@@ -7,11 +7,14 @@ const Schema = mongoose.Schema;
 const userAccountSchema = new Schema({
   SellerId: {
     type: Schema.Types.ObjectId,
-    default: null,
+    ref: 'Seller',
   },
   BuyerId: {
     type: Schema.Types.ObjectId,
-    default: null,
+    ref: 'Buyer',
+  },
+  AccountType: {
+    type: String,
   },
   FullName: {
     type: String,

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const uri = '';
+const uri = "mongodb+srv://sumithraj:A7Jeh9LKKUa6XXVg@clonecluster.xebguct.mongodb.net/B2B?retryWrites=true&w=majority";
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,

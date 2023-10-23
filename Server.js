@@ -1,6 +1,7 @@
-// import requirements
 const express = require('express')
 const bodyParser = require('body-parser')
+
+const { UserRoutes } = require('./Modules/MainRouter');
 
 const app = express()
 const port = 3000 || process.env.PORT;
@@ -9,7 +10,7 @@ const port = 3000 || process.env.PORT;
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-
+app.use('/user', UserRoutes)
 
 // start listening
 app.listen(port, (err) => {

@@ -18,7 +18,7 @@ const sellerSchema = new Schema({
     type: String,
     required: true,
   },
-  BusinessType: {
+  BussinessType: {
     type: String,
     required: true,
   },
