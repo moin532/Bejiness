@@ -4,25 +4,40 @@ const db = require('./MainDatabaseConnector');
 const Schema = mongoose.Schema;
 
 // Define the Product schema
-const productSchema = new Schema({
+const productsSchema = new Schema({
   SellerId: {
     type: Schema.Types.ObjectId,
-    ref: 'Seller', 
+    ref: 'Seller',
+  },
+  CategoryType: {
+    type: String,
+    required: true,
+    enum: [
+      'agri products & equipments',
+      'apparel and fashion',
+      'architects & interior designing',
+      'automobile parts & spares',
+      'chemicals,dyes & solvents',
+      'construction & real estate',
+      'consumer electronics',
+      'electricals & electronics',
+      'energy and power'
+    ]
   },
   ProductName: {
     type: String,
     required: true,
   },
-  ProductImage: {
-    type: String,
+  ProductImagesDetails: {
+    type: Object,
     required: true,
   },
   About: {
     type: String,
     required: true,
   },
-  Catalogue: {
-    type: String,
+  CataloguePdfDetails: {
+    type: Object,
     required: true,
   },
   Quantity: {
@@ -36,6 +51,6 @@ const productSchema = new Schema({
 });
 
 // Create the Product model
-const Product = db.model('Product', productSchema);
+const Products = db.model('Products', productsSchema);
 
-module.exports = Product;
+module.exports = Products;

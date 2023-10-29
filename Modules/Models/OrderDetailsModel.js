@@ -13,7 +13,7 @@ const orderDetailsSchema = new Schema({
     type: Number,
     required: true,
   },
-  Price: {
+  UnitPrice: {
     type: Number,
   },
 });

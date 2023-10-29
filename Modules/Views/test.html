@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <form action="http://127.0.0.1:3000/products/upload" enctype="multipart/form-data" method="post">
+        <input type="text" name="token" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI2NTNkMGI0MmUxZDQyZDMyMjJiM2YxNmEiLCJNb2JpbGVOdW1iZXIiOiIxMjM0NSIsImlhdCI6MTY5ODQ5OTQzMywiZXhwIjoxNjk4OTMxNDMzfQ.9wQCrhePcOkVFXeahOhQj0y7L9dyBIHA8tbbCiBhmuM">
+        <input type="text" name="product_name"><br>
+        <input type="text" name="category_type"><br>
+        <input type="text" name="about"><br>
+        <input type="number" name="quantity"><br>
+        <input type="number" name="price"><br>
+        <input type="file" name="product_image" multiple><br>
+        <input type="file" name="product_catalogue"><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+</html>

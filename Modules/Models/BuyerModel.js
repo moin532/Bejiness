@@ -6,8 +6,9 @@ const Schema = mongoose.Schema;
 // Define the Buyer schema
 const buyerSchema = new Schema({
   OrderId: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     ref: 'Order',
+    default: []
   },
 });
 
