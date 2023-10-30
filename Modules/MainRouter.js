@@ -13,14 +13,14 @@ const OrderRoutes = express.Router()
 UserRoutes
     .post('/register', UserController.UserRegistration)
     .post('/login', UserController.UserLogin)
-    .put('/profile', UserController.UpdateUser)
     .get('/profile', UserController.GetUser)
+    .put('/profile', UserController.UpdateUser)
 
 ProductRoutes
     .get('/category', ProductController.GetCategory)
     .get('/:productId', ProductController.GetProduct)
-    .delete('/:productId', ProductController.DeleteProduct)
     .put('/:productId', ProductController.UpdateProduct)
+    .delete('/:productId', ProductController.DeleteProduct)
     .post('/upload', Middlewares.Upload.fields([
         { name: 'product_image', maxCount: 10 }, // Up to 10 image files
         { name: 'product_catalogue', maxCount: 1 },     // Only one PDF file

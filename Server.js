@@ -13,9 +13,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(`${__dirname}/Modules/Views`));
 app.use(express.static(`${__dirname}/ProductsFiles`));
 
-app.get('/', (req, res) => {
-    res.sendFile(`${__dirname}/Modules/Views/test.html`)
-})
+// for testing purpose
+
+// app.get('/', (req, res) => {
+//     res.sendFile(`${__dirname}/Modules/Views/test.html`)
+// })
 
 app.use('/user', UserRoutes)
 app.use('/products', ProductRoutes)
