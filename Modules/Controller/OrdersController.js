@@ -171,7 +171,7 @@ exports.UpdateOrderStatus = async (req, res) => {
             });
         }
 
-        const validStatuses = ['pending', 'shipped', 'delivered', 'cancelled'];
+        const validStatuses = ['pending', 'shipped', 'delivered'];
         if (!validStatuses.includes(new_status)) {
             return res.status(400).json({
                 success: false,

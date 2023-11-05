@@ -231,8 +231,6 @@ exports.GetCategory = async (req, res) => {
         const { token } = req.headers;
         const { category_type } = req.query;
 
-        console.log(category_type);
-
         const DecodedToken = jwt.verify(token, process.env.JWTKEY);
 
         if (!DecodedToken) {
