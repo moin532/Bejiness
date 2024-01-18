@@ -1,17 +1,23 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
-const { UserRoutes, ProductRoutes, OrderRoutes } = require('./Modules/MainRouter');
+const { UserRoutes, 
+    ProductRoutes, 
+    OrderRoutes,
+    PaymentRoutes
+} = require('./Modules/MainRouter');
 
 const app = express()
 const port = 3000 || process.env.PORT;
 
 // Middlewares
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(express.static(`${__dirname}/Modules/Views`));
-app.use(express.static(`${__dirname}/ProductsFiles`));
+app.use(express.static(`${__dirname}/ProductFiles`));
 
 // for testing purpose
 
@@ -19,9 +25,10 @@ app.use(express.static(`${__dirname}/ProductsFiles`));
 //     res.sendFile(`${__dirname}/Modules/Views/test.html`)
 // })
 
-app.use('/user', UserRoutes)
-app.use('/products', ProductRoutes)
-app.use('/orders', OrderRoutes)
+app.use('/api/users', UserRoutes)
+app.use('/api/products', ProductRoutes)
+app.use('/api/orders', OrderRoutes)
+app.use('/api/payment', PaymentRoutes)
 
 // start listening
 app.listen(port, (err) => {

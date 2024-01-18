@@ -5,31 +5,20 @@ const Schema = mongoose.Schema;
 
 // Define the Seller schema
 const sellerSchema = new Schema({
-  UniqueId: {
-    type: String,
-    unique: true,
-    required: true,
+  notification: [],
+  companyName: {
+    type: String
   },
-  ProductId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Product',
+  bussinessType: {
+    type: String
   },
-  CompanyName: {
-    type: String,
-    required: true,
+  gstNumber: {
+    type: String
   },
-  BussinessType: {
-    type: String,
-    required: true,
-  },
-  GSTNumber: {
-    type: String,
-    required: true,
-  },
-  KYCIsVerified: {
+  kycIsVerified: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 });
 
 // Create the Seller model

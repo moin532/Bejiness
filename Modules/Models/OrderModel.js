@@ -3,44 +3,53 @@ const db = require('./MainDatabaseConnector');
 
 const Schema = mongoose.Schema;
 
-// Define the Orders schema
+// Define the Order schema
 const orderSchema = new Schema({
-  BuyerId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Buyer', 
-  },
-  SellerId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Seller', 
-  },
-  ShippingId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Shipping', 
-  },
-  TransactionId: {
-    type: String,
-    ref: 'Transaction', 
-  },
-  OrderDetailsId: {
-    type: Schema.Types.ObjectId,
-    ref: 'OrderDetails', 
-  },
-  OrderDate: {
-    type: Date,
-    default: Date.now,
-  },
-  TotalAmount: {
+  orderedItems: [{
+    product: {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+    },
+    quantity: {
+      type: Number,
+      required: true
+    }
+  }],
+  totalCost: {
     type: Number,
-    required: true,
+    required: true
   },
-  Status: {
+  orderDate: {
+    type: Date,
+    default: Date.now
+  },
+  deliveryDate: {
+    type: Date
+  },
+  state: {
+    type: String
+  },
+  city: {
+    type: String
+  },
+  postalCode: {
+    type: String
+  },
+  shipAddress: {
+    type: String
+  },
+  isConfirmed: {
+    type: Boolean,
+    default: false
+  },
+  deliveryStatus: {
     type: String,
-    enum: ['pending', 'shipped', 'delivered', 'cancelled'],
-    default: 'pending',
-  },
+    default: 'Pending'
+    // Possible values: 'Pending', 'Shipped', 'Delivered', etc.
+  }
 });
 
-// Create the Orders model
+// Create the Order model
 const Order = db.model('Order', orderSchema);
 
 module.exports = Order;

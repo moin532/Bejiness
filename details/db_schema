@@ -1,0 +1,94 @@
++---------------------+       +---------------------+
+|        User         |       |     ShoppingCart    |
++---------------------+       +---------------------+
+| userId (PK)         |       | shoppingCartId (PK) |
+| fullName            |       | productDetails      |
+| password            |       | status              |
+| address             |       +---------------------+
+| email               |
+| phoneNumber         |
+| accountType         |
+| shoppingCartId (FK) |
+| sellerId (FK)       |
++---------------------+
+
++---------------------+       +---------------------+
+|       Product       |       |       Seller        |
++---------------------+       +---------------------+
+| productId (PK)      |       | sellerId (PK)       |
+| productName         |       | sellerName          |
+| description         |       | sellerPhoneNumber   |
+| price               |       | sellerEmail         |
+| onsale              |       | companyName         |
+| specs               |       | businessType        |
+| image               |       | gstNumber           |
+| catalogue           |       | kycIsVerified       |
++---------------------+       +---------------------+
+
+
++---------------------+     
+|        Order        |       
++---------------------+       
+| orderId (PK)        |      
+| totalItems          |       
+| shippingFee         |      
+| totalCost           |      
+| orderDate           |
+| deliveryDate        |
+| state               |
+| city                |
+| postalCode          |
+| shipAddress         |
+| deliveryStatus      |
+| userId (FK)         |
++---------------------+
+
++---------------------+       +---------------------+
+|       Payment       |       |    OrderPlaced      |
++---------------------+       +---------------------+
+| paymentId (PK)      |       | orderPlacedId (PK)  |
+| paymentMethod       |       | userId (FK)         |
+| paymentDate         |       | orderId (FK)        |
+| paymentTotalAmount  |       +---------------------+
+| transactionId       |
++---------------------+
+
++---------------------+       +---------------------+
+| OrderHasProducts    |       | CartHasProduct      |
++---------------------+       +---------------------+
+| orderHasProductsId  |       | cartHasProductId    |
+| orderId (FK)        |       | shoppingCartId (FK) |
+| productDetails      |       | productId (FK)      |
++---------------------+       +---------------------+
+
++---------------------+
+| ProductSoldBySeller |
++---------------------+
+| productSoldId (PK)  |
+| sellerId (FK)       |
+| productId (FK)      |
++---------------------+
+
++---------------------+
+|     OrderPaid       |
++---------------------+
+| orderPaidId (PK)    |
+| orderId (FK)        |
+| paymentId (FK)      |
++---------------------+
+
++---------------------+
+|      UserHasCart    |
++---------------------+
+| userHasCartId (PK)  |
+| userId (FK)         |
+| shoppingCartId (FK) |
++---------------------+
+
++---------------------+
+|      UserIsSeller   |
++---------------------+
+| userIsSellerId (PK) |
+| userId (FK)         |
+| SellerId (FK)       |
++---------------------+

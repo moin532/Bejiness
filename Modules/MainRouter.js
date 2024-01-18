@@ -1,39 +1,39 @@
 const express = require('express')
 
-const UserController = require('./Controller/UserController')
-const ProductController = require('./Controller/ProductController')
-const OrdersController = require('./Controller/OrdersController')
-const ShippingController = require('./Controller/ShippingController')
+const UsersController = require('./Controllers/UsersController')
+const ProductsController = require('./Controllers/ProductsController')
+const OrdersController = require('./Controllers/OrdersController')
+const PaymentController = require('./Controllers/PaymentController')
 const Middlewares = require('./Middlewares')
 
 const UserRoutes = express.Router()
 const ProductRoutes = express.Router()
 const OrderRoutes = express.Router()
+const PaymentRoutes = express.Router()
 
 UserRoutes
-    .post('/register', UserController.UserRegistration)
-    .post('/login', UserController.UserLogin)
-    .get('/profile', UserController.GetUser)
-    .put('/profile', UserController.UpdateUser)
+    .post('/register', UsersController.UserRegistration)
+    .post('/login', UsersController.UserLogin)
+    .get('/profile', UsersController.GetUser)
+    .put('/profile', UsersController.UpdateUser)
+    .delete('/profile', UsersController.DeleteUser)
 
 ProductRoutes
-    .get('/category', ProductController.GetCategory)
-    .get('/:productId', ProductController.GetProduct)
-    .put('/:productId', ProductController.UpdateProduct)
-    .delete('/:productId', ProductController.DeleteProduct)
-    .post('/upload', Middlewares.Upload.fields([
-        { name: 'product_image', maxCount: 10 }, // Up to 10 image files
-        { name: 'product_catalogue', maxCount: 1 },     // Only one PDF file
-    ]), ProductController.UploadProduct)
+    .get('/category', ProductsController.GetCategory)
+    .get('/seller', ProductsController.GetSellerProducts)
+    .post('/upload', Middlewares.upload.array("product_image", 5), ProductsController.UploadProduct)
+    .get('/:productId', ProductsController.GetProduct)
+    .put('/:productId', ProductsController.UpdateProduct)
+    .delete('/:productId', ProductsController.DeleteProduct)
 
 OrderRoutes
-    .post('/order', OrdersController.CreateOrder)
-    .get('/order_ids', OrdersController.GetOrderList)
-    .get('/:orderId', OrdersController.GetOrder)
-    .put('/:orderId/status', OrdersController.UpdateOrderStatus)
-    .put('/:orderId/cancel', OrdersController.CancelOrder)
-    .post('/:orderId/shipping_details', ShippingController.CreateShippingAddress)
-    .get('/:orderId/shipping_details', ShippingController.GetShippingDetails)
-    .put('/:orderId/update_address', ShippingController.UpdateShippingAddress)
+    .post('/place-order', OrdersController.CreateOrder)
+    .get('/:orderId', OrdersController.OrderDetails)
+    .get('/orders-list', OrdersController.OrderList)
+    .put('/:orderId', OrdersController.UpdateOrder)
 
-module.exports = { UserRoutes, ProductRoutes, OrderRoutes }
+PaymentRoutes
+    .post('/place-order', PaymentController.OrderPayment)
+    .post('/order/validate', PaymentController.ValidateOrder)
+
+module.exports = { UserRoutes, ProductRoutes, OrderRoutes, PaymentRoutes }
