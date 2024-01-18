@@ -16,6 +16,8 @@ const ProductDB = require('../Models/ProductModel.js')
 exports.UploadProduct = async (req, res) => {
     try {
 
+        console.log(req.files);
+
         const { token } = req.headers;
         const { product_name, description, prices, specs, category_type } = req.body;
 
@@ -38,8 +40,6 @@ exports.UploadProduct = async (req, res) => {
             });
         }
 
-
-
         //         cloudinary.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
         //   { public_id: "olympic_flag" },
         //   function(error, result) {console.log(result); });
@@ -51,8 +51,10 @@ exports.UploadProduct = async (req, res) => {
             description: description,
             prices: JSON.parse(prices),
             specs: JSON.parse(specs),
-            images: JSON.stringify(req.files['product_image'])
+            images: JSON.stringify(req.files)
         });
+
+        console.log(Product);
 
         return res.status(200).json({
             success: true,
@@ -155,6 +157,7 @@ exports.GetSellerProducts = async (req, res) => {
         const resultProducts = []
 
         Products.forEach((Data) => {
+            console.log(Data.images);
             resultProducts.push({
                 product_id: Data._id,
                 product_name: Data.productName,
@@ -165,11 +168,14 @@ exports.GetSellerProducts = async (req, res) => {
             });
         })
 
+        console.log(resultProducts);
+
         return res.status(200).json({
             success: true,
             products: resultProducts
         });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             success: false,
             content: error.message

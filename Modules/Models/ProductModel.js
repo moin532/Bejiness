@@ -20,11 +20,9 @@ const productSchema = new Schema({
     quantityRange: {
       min: {
         type: Number,
-        required: true
       },
       max: {
         type: Number,
-        required: true
       }
     }
   }],
