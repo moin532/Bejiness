@@ -156,7 +156,8 @@ exports.GetUser = async (req, res) => {
                 company_name: SellerData.companyName,
                 gst_number: SellerData.gstNumber,
                 kyc_isverified: SellerData.kycIsVerified,
-                bussiness_type: SellerData.bussinessType
+                bussiness_type: SellerData.bussinessType,
+                notifications: SellerData.notificationId
             });
         }
 

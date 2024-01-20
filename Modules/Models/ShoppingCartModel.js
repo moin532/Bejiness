@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 // Define the ShoppingCart schema
 const shoppingCartSchema = new Schema({
   productDetails: [{
-    product: {
+    productId: {
       type: Schema.Types.ObjectId,
       ref: 'Product',
     },

@@ -5,7 +5,10 @@ const Schema = mongoose.Schema;
 
 // Define the Seller schema
 const sellerSchema = new Schema({
-  notification: [],
+  notificationId: [{
+    type: Schema.Types.ObjectId,
+    ref: 'notification',
+  }],
   companyName: {
     type: String
   },

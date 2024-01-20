@@ -44,9 +44,6 @@ const productSchema = new Schema({
   images: [{
     type: String // the image is stored as a URL
   }],
-  catalogue: {
-    type: String // the catalogue is stored as a URL
-  },
   sellerId: {
     type: Schema.Types.ObjectId,
     ref: 'Seller',

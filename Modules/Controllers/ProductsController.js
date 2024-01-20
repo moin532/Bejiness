@@ -16,8 +16,6 @@ const ProductDB = require('../Models/ProductModel.js')
 exports.UploadProduct = async (req, res) => {
     try {
 
-        console.log(req.files);
-
         const { token } = req.headers;
         const { product_name, description, prices, specs, category_type } = req.body;
 
@@ -54,14 +52,11 @@ exports.UploadProduct = async (req, res) => {
             images: JSON.stringify(req.files)
         });
 
-        console.log(Product);
-
         return res.status(200).json({
             success: true,
             product_id: Product._id
         });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             content: error.message
@@ -157,7 +152,6 @@ exports.GetSellerProducts = async (req, res) => {
         const resultProducts = []
 
         Products.forEach((Data) => {
-            console.log(Data.images);
             resultProducts.push({
                 product_id: Data._id,
                 product_name: Data.productName,
@@ -168,14 +162,11 @@ exports.GetSellerProducts = async (req, res) => {
             });
         })
 
-        console.log(resultProducts);
-
         return res.status(200).json({
             success: true,
             products: resultProducts
         });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             content: error.message
@@ -307,11 +298,11 @@ exports.DeleteProduct = async (req, res) => {
     }
 }
 
-// GET http://localhost:3000/api/products/category
+// POST http://localhost:3000/api/products/category
 exports.GetCategory = async (req, res) => {
     try {
         const { token } = req.headers;
-        const { category_type } = req.query;
+        const { category_type } = req.body;
 
         const DecodedToken = jwt.verify(token, process.env.JWTKEY);
 
@@ -322,27 +313,33 @@ exports.GetCategory = async (req, res) => {
             });
         }
 
-        const product = await ProductDB.find({ categoryType: category_type })
+        let Products;
 
-        let Products = [];
+        if(category_type !== "all"){
+            Products = await ProductDB.find({ categoryType: category_type })
+        }else{
+            Products = await ProductDB.find()
+        }
 
-        product.forEach((Data) => {
-            Products.push({
+        const resultProducts = []
+
+        Products.forEach((Data) => {
+            resultProducts.push({
+                product_id: Data._id,
                 product_name: Data.productName,
                 category_type: Data.categoryType,
                 description: Data.description,
                 prices: Data.prices,
-                onsale: Data.onSale,
-                specs: Data.specs,
                 images: JSON.parse(Data.images).map((ele) => '/' + ele.filename),
             });
-        });
+        })
 
         return res.status(200).json({
             success: true,
-            products: Products
+            products: resultProducts
         });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             success: false,
             content: error.message

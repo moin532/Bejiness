@@ -4,6 +4,8 @@ const UsersController = require('./Controllers/UsersController')
 const ProductsController = require('./Controllers/ProductsController')
 const OrdersController = require('./Controllers/OrdersController')
 const PaymentController = require('./Controllers/PaymentController')
+const CartController = require('./Controllers/CartController')
+
 const Middlewares = require('./Middlewares')
 
 const UserRoutes = express.Router()
@@ -17,10 +19,15 @@ UserRoutes
     .get('/profile', UsersController.GetUser)
     .put('/profile', UsersController.UpdateUser)
     .delete('/profile', UsersController.DeleteUser)
+    .post('/cart/add-item', CartController.AddItem)
+    .get('/cart/get-cart', CartController.GetCart)
+    .delete('/cart/delete-item', CartController.DeleteItem)
+    .put('/cart/update-quantity', CartController.UpdateQuantity)
+    .delete('/cart/clear-cart', CartController.ClearCart)
 
 ProductRoutes
-    .get('/category', ProductsController.GetCategory)
     .get('/seller', ProductsController.GetSellerProducts)
+    .post('/category', ProductsController.GetCategory)
     .post('/upload', Middlewares.upload.array("product_image", 5), ProductsController.UploadProduct)
     .get('/:productId', ProductsController.GetProduct)
     .put('/:productId', ProductsController.UpdateProduct)
