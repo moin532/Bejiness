@@ -25,6 +25,10 @@ app.use(express.static(`${__dirname}/ProductFiles`));
 //     res.sendFile(`${__dirname}/Modules/Views/test.html`)
 // })
 
+app.get('/', (req, res) => {
+    res.status(200).write("Server working successfully... :)")
+})
+
 app.use('/api/users', UserRoutes)
 app.use('/api/products', ProductRoutes)
 app.use('/api/orders', OrderRoutes)

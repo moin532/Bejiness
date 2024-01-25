@@ -4,7 +4,8 @@
   "description": "<p>This is a CRUD (Create, Read, Update, Delete) API for user authentication and email verification, built using Express.js and MongoDB. The API provides endpoints to manage user accounts, including signup, login, email verification, JWT authentication and basic user profile operations.</p>",
   "main": "Server.js",
   "scripts": {
-    "test": "nodemon Server.js"
+    "test": "nodemon Server.js",
+    "dev": "node Server.js"
   },
   "author": "Sumith",
   "license": "ISC",
