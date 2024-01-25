@@ -9,7 +9,7 @@ const { UserRoutes,
 } = require('./Modules/MainRouter');
 
 const app = express()
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 5000;
 
 // Middlewares
 app.use(cors())
@@ -26,7 +26,7 @@ app.use(express.static(`${__dirname}/ProductFiles`));
 // })
 
 app.get('/', (req, res) => {
-    res.status(200).write("Server working successfully... :)")
+    return res.status(200).write("Server working successfully... :)")
 })
 
 app.use('/api/users', UserRoutes)
