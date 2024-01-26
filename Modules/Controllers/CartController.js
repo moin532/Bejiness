@@ -80,12 +80,15 @@ exports.GetCart = async (req, res) => {
                 const product = await ProductDB.findById(item.productId);
                 const sellerData = await SellerDB.findById(product.sellerId);
 
+                const ProductImagesUrls = JSON.parse(product.images).map((ele) => '/' + ele.filename);
+
                 const cartDetails = {
                     product_name: product.productName,
                     prices: product.prices,
                     seller: sellerData.companyName,
                     product_category: product.categoryType,
                     product_id: product._id,
+                    product_image: ProductImagesUrls,
                     quantity: item.quantity
                 };
 
