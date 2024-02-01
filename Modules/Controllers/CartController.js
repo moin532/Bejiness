@@ -11,7 +11,7 @@ const SellerDB = require('../Models/SellerModel.js')
 exports.AddItem = async (req, res) => {
     try {
         const { token } = req.headers;
-        const { product_id, quantity } = req.body;
+        const { product_id } = req.body;
 
         const DecodedToken = jwt.verify(token, process.env.JWTKEY);
 
@@ -25,6 +25,15 @@ exports.AddItem = async (req, res) => {
         const UserData = await UserAccountDB.findById(DecodedToken.UserId);
 
         const UserCart = await ShoppingCart.findById(UserData.shoppingCartId);
+
+        const Product = await ProductDB.findById(product_id);
+
+        let quantity;
+        if(Product.prices[0].quantityRange.min){
+            quantity = Product.prices[0].quantityRange.min;
+        }else{
+            quantity = 1;
+        }
 
         // Check if the product is already in the cart
         const existingProductIndex = UserCart.productDetails.findIndex(item => String(item.productId) === String(product_id));
@@ -111,6 +120,7 @@ exports.GetCart = async (req, res) => {
           let applicablePrice = 0;
         
           for (const price of currProduct.prices) {
+            console.log(price);
             if (
               (!price.quantityRange.min || quantity >= price.quantityRange.min) &&
               (!price.quantityRange.max || quantity <= price.quantityRange.max)
@@ -120,9 +130,11 @@ exports.GetCart = async (req, res) => {
             }
           }
         
+          console.log(totalAmount);
           totalAmount += applicablePrice * quantity;
         }
-        
+        console.log("final: ",totalAmount);
+
         return res.status(200).json({
           success: true,
           cart_items: {
