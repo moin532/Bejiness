@@ -29,9 +29,9 @@ exports.AddItem = async (req, res) => {
         const Product = await ProductDB.findById(product_id);
 
         let quantity;
-        if(Product.prices[0].quantityRange.min){
+        if (Product.prices[0].quantityRange.min) {
             quantity = Product.prices[0].quantityRange.min;
-        }else{
+        } else {
             quantity = 1;
         }
 
@@ -66,6 +66,7 @@ exports.AddItem = async (req, res) => {
 
 // GET http://localhost:3000/api/users/cart/get-cart
 exports.GetCart = async (req, res) => {
+    console.log("running...");
     try {
         const { token } = req.headers;
 
@@ -77,13 +78,14 @@ exports.GetCart = async (req, res) => {
                 content: "invalid token"
             });
         }
-
+        console.log("part 1");
         const UserData = await UserAccountDB.findById(DecodedToken.UserId);
 
         const UserCart = await ShoppingCart.findById(UserData.shoppingCartId);
 
         let CartItems = [];
 
+        console.log("part 2");
         const fetchCartItemDetails = async (item) => {
             try {
                 const product = await ProductDB.findById(item.productId);
@@ -108,42 +110,48 @@ exports.GetCart = async (req, res) => {
             }
         };
 
+        console.log("part 3");
+
         const cartItemDetailsArray = await Promise.all(UserCart.productDetails.map(fetchCartItemDetails));
+        console.log("cartItemDetailsArray length:", cartItemDetailsArray.length);
+
         CartItems = [...cartItemDetailsArray];
+        
+        console.log("part 4");
 
         let totalAmount = 0;
 
         for (const cartItem of UserCart.productDetails) {
-          const currProduct = await ProductDB.findById(cartItem.productId);
-          const quantity = cartItem.quantity;
-        
-          let applicablePrice = 0;
-        
-          for (const price of currProduct.prices) {
-            console.log(price);
-            if (
-              (!price.quantityRange.min || quantity >= price.quantityRange.min) &&
-              (!price.quantityRange.max || quantity <= price.quantityRange.max)
-            ) {
-              applicablePrice = price.price;
-              break;
+            const currProduct = await ProductDB.findById(cartItem.productId);
+            const quantity = cartItem.quantity;
+
+            let applicablePrice = 0;
+
+            for (const price of currProduct.prices) {
+                console.log(price);
+                if (
+                    (!price.quantityRange.min || quantity >= price.quantityRange.min) &&
+                    (!price.quantityRange.max || quantity <= price.quantityRange.max)
+                ) {
+                    applicablePrice = price.price;
+                    break;
+                }
             }
-          }
-        
-          console.log(totalAmount);
-          totalAmount += applicablePrice * quantity;
+
+            console.log(totalAmount);
+            totalAmount += applicablePrice * quantity;
         }
-        console.log("final: ",totalAmount);
+        console.log("final: ", totalAmount);
 
         return res.status(200).json({
-          success: true,
-          cart_items: {
-            product_details: CartItems,
-            status: UserCart.status,
-            total_amount: totalAmount,
-          },
+            success: true,
+            cart_items: {
+                product_details: CartItems,
+                status: UserCart.status,
+                total_amount: totalAmount,
+            },
         });
-        
+
     } catch (error) {
         return res.status(500).json({
             success: false,
