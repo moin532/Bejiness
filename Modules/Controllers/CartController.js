@@ -66,7 +66,6 @@ exports.AddItem = async (req, res) => {
 
 // GET http://localhost:3000/api/users/cart/get-cart
 exports.GetCart = async (req, res) => {
-    console.log("running...");
     try {
         const { token } = req.headers;
 
@@ -78,19 +77,16 @@ exports.GetCart = async (req, res) => {
                 content: "invalid token"
             });
         }
-        console.log("part 1");
         const UserData = await UserAccountDB.findById(DecodedToken.UserId);
 
         const UserCart = await ShoppingCart.findById(UserData.shoppingCartId);
 
         let CartItems = [];
 
-        console.log("part 2");
         const fetchCartItemDetails = async (item) => {
             try {
                 const product = await ProductDB.findById(item.productId);
                 const sellerData = await SellerDB.findById(product.sellerId);
-
                 const ProductImagesUrls = JSON.parse(product.images).map((ele) => '/' + ele.filename);
 
                 const cartDetails = {
@@ -106,19 +102,14 @@ exports.GetCart = async (req, res) => {
                 return cartDetails;
             } catch (error) {
                 console.error('Error fetching cart item details:', error);
-                throw error; // Propagate the error to handle it in Promise.all
+                throw error;
             }
         };
 
-        console.log("part 3");
-
         const cartItemDetailsArray = await Promise.all(UserCart.productDetails.map(fetchCartItemDetails));
-        console.log("cartItemDetailsArray length:", cartItemDetailsArray.length);
 
         CartItems = [...cartItemDetailsArray];
         
-        console.log("part 4");
-
         let totalAmount = 0;
 
         for (const cartItem of UserCart.productDetails) {
@@ -128,7 +119,6 @@ exports.GetCart = async (req, res) => {
             let applicablePrice = 0;
 
             for (const price of currProduct.prices) {
-                console.log(price);
                 if (
                     (!price.quantityRange.min || quantity >= price.quantityRange.min) &&
                     (!price.quantityRange.max || quantity <= price.quantityRange.max)
@@ -138,10 +128,8 @@ exports.GetCart = async (req, res) => {
                 }
             }
 
-            console.log(totalAmount);
             totalAmount += applicablePrice * quantity;
         }
-        console.log("final: ", totalAmount);
 
         return res.status(200).json({
             success: true,
