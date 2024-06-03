@@ -40,7 +40,8 @@ OrderRoutes
     .put('/:orderId', OrdersController.UpdateOrder)
 
 PaymentRoutes
-    .post('/place-order', PaymentController.OrderPayment)
-    .post('/order/validate', PaymentController.ValidateOrder)
+    .post('/process-payment', PaymentController.ProcessPayment)
+    // .post('/place-order', PaymentController.OrderPayment)
+    // .post('/order/validate', PaymentController.ValidateOrder)
 
 module.exports = { UserRoutes, ProductRoutes, OrderRoutes, PaymentRoutes }

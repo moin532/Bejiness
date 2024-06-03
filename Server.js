@@ -12,7 +12,23 @@ const app = express()
 const port = process.env.PORT || 5000;
 
 // Middlewares
-app.use(cors())
+
+const allowedOrigins = ['http://bejiness.in', 'https://bejiness.in'];
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -20,10 +36,6 @@ app.use(express.static(`${__dirname}/Modules/Views`));
 app.use(express.static(`${__dirname}/ProductFiles`));
 
 // for testing purpose
-
-// app.get('/', (req, res) => {
-//     res.sendFile(`${__dirname}/Modules/Views/test.html`)
-// })
 
 app.get('/', (req, res) => {
     return res.status(200).write("Server working successfully... :)")

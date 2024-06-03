@@ -1,61 +1,38 @@
-const Razorpay = require("razorpay")
-const crypto = require("crypto")
+const axios = require('axios');
 
-// POST http://localhost:3000/api/payment/place-order
-exports.OrderPayment = async (req, res) => {
-    try {
-        const razorpay = new Razorpay({
-            key_id: process.env.RAZORPAY_API_KEY,
-            key_secret: process.env.RAZORPAY_API_SECRET
-        })
+const phonePeApiBaseUrl = 'https://api.phonepe.com';
+const apiKey = '';
 
-        const options = req.body;
-        const order = await razorpay.orders.create(options);
+exports.ProcessPayment = async (req, res) => {
+  try {
+    const { amount, order_id, customer_id } = req.body;
 
-        if (!order) {
-            return res.status(400).json({
-                success: false,
-                content: "cannot place order"
-            })
-        }
+    const response = await axios.post(
+      `${phonePeApiBaseUrl}/v3/payment`,
+      {
+        amount: amount,
+        orderId: order_id,
+        customerId: customer_id
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Api-Key': apiKey,
+          // Include other required headers
+        },
+      }
+    );
 
-        res.status(200).json({
-            success: true,
-            order: order
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            content: error.message
-        })
-    }
-}
-
-// POST http://localhost:3000/api/payment/order/validate
-exports.ValidateOrder = async (req, res) => {
-    try {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body
     
-        const sha = crypto.createHmac("sha256", process.env.RAZORPAY_API_SECRET)
-        // order_id + "|" + razorpay_payment_id
-        sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
-        const digest = sha.digest("hex")
-        if (digest !== razorpay_signature) {
-            return res.status(400).json({
-                success: false,
-                content: "Transaction is not legit!"
-            })
-        }
-    
-        res.status(200).json({
-            success: true,
-            orderId: razorpay_order_id,
-            paymentId: razorpay_payment_id
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            content: error.message
-        })
+    if (response.status === 200 && response.data.success) {
+      res.status(200).json({ success: true, message: 'Payment successful!' });
+    } else {
+      res.status(400).json({ success: false, message: 'Payment failed.' });
     }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      content: error.message
+    })
+  }
 }
