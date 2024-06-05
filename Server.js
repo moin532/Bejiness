@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use((req,res,next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://bejiness.com');
+    res.setHeader('Access-Control-Allow-Origin', 'https://bejiness.in');
     next();
 })
 
