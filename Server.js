@@ -13,21 +13,11 @@ const port = process.env.PORT || 5000;
 
 // Middlewares
 
-const allowedOrigins = ['http://bejiness.in', 'https://bejiness.in'];
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
-
+app.use(cors());
+app.use((req,res,next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://bejiness.com');
+    next();
+})
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
