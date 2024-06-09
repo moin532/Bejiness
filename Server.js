@@ -16,6 +16,11 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use((req,res,next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://bejiness.in/');
+    res.setHeader('Access-Control-Allow-Origin', 'http://bejiness.in/');
+
+    res.setHeader('Access-Control-Allow-Origin', 'https://bejiness.in/*');
+
+    res.setHeader('Access-Control-Allow-Origin', 'http://bejiness.in/*');
     next();
 })
 
@@ -27,7 +32,7 @@ app.use(express.static(`${__dirname}/ProductFiles`));
 
 // for testing purpose
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     return res.status(200).write("Server working successfully... :)")
 })
 
