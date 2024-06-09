@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const path = require('path')
 
 const { UserRoutes, 
     ProductRoutes, 
@@ -10,6 +11,11 @@ const { UserRoutes,
 
 const app = express()
 const port = process.env.PORT || 5000;
+
+//frontend
+const _dirname = path.resolve()
+const buildPath = path.join(_dirname, "./dist")
+app.use(express.static(buildPath));
 
 // Middlewares
 
@@ -35,13 +41,17 @@ app.use(express.static(`${__dirname}/ProductFiles`));
 // for testing purpose
 
 app.get('/api', (req, res) => {
-    return res.status(200).write("Server working successfully... :)")
+    return res.status(200).send("Server working successfully... :)")
 })
 
 app.use('/api/users', UserRoutes)
 app.use('/api/products', ProductRoutes)
 app.use('/api/orders', OrderRoutes)
 app.use('/api/payment', PaymentRoutes)
+
+app.get('*', (req, res) => {
+    return res.sendFile(path.join(buildPath, '/index.html'));
+});
 
 // start listening
 app.listen(port, (err) => {
