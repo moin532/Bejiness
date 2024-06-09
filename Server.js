@@ -21,8 +21,8 @@ app.use(express.static(buildPath));
 
 // Define allowed origins
 const allowedOrigins = [
-    'https://bejiness.in',
-    'http://bejiness.in'
+    'https://bejiness.in/login',
+    'http://bejiness.in/login'
 ];
 
 // CORS configuration
