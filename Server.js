@@ -17,23 +17,11 @@ const _dirname = path.resolve()
 const buildPath = path.join(_dirname, "./dist")
 app.use(express.static(buildPath));
 
-// Middlewares
-
-// Define allowed origins
-const allowedOrigins = [
-    'https://bejiness.in/login',
-    'http://bejiness.in/login'
-];
 
 // CORS configuration
 app.use(cors({
-    origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: "*",
+    allowedHeaders:['Content-Type', 'Authorization'],
     credentials: true
 }));
 
