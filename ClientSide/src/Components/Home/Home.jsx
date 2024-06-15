@@ -13,25 +13,25 @@ import './Home.css'
 import { useEffect } from "react";
 
 
-export default function Home(){
+export default function Home() {
 
   useEffect(() => {
-    alert('🚧 Our website is still a work in progress. Join Bejiness and stay tuned for more! 🚧');  },[])
+    alert('🚧 Our website is still a work in progress. Join Bejiness and stay tuned for more! 🚧');
 
-  return(
-    <>
+  }, [])
+
+  return (
     <div className="homep-main">
-    <Navbar />
-    <Container1 />
-    <Container2 />
-    <Scrollcat />
-    <Recommend />
-    {/* <Recommend /> */}
-    <Trends />
-    <Explore />
-    <Join />
-    <Footer />
-    <Post /></div>
-    </>
+      <Navbar />
+      <Container1 />
+      <Container2 />
+      <Scrollcat />
+      {/* <Recommend /> */}
+      {/* <Trends /> */}
+      <Explore />
+      <Join />
+      <Footer />
+      {/* <Post /> */}
+    </div>
   )
 }

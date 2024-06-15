@@ -4,7 +4,7 @@ import { BiSearchAlt } from 'react-icons/bi'
 function Navbar({ children }) {
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
+            <nav className="navbar navbar-dark sticky-top">
                 <div className="container-fluid">
 
                     <Link className="navbar-brand" to="/home">Bejiness.com</Link>

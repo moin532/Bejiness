@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -8,9 +9,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const isScrolled = scrollPosition > 60;
-
-      setScrolled(isScrolled);
+      setScrolled(scrollPosition > 200);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -26,26 +25,26 @@ const Navbar = () => {
 
   return (
     <nav
-  className={`navbar navbar-expand-lg navbar-light ${scrolled ? 'bg-white nav-bor' : 'bg-transparent1'} fixed-top`}
-  style={{ transition: 'background 0.3s, color 0.3s' }}
->
+      className={`navbar navbar-expand-lg navbar-light ${scrolled ? 'bg-white nav-bor' : 'bg-transparent1'} fixed-top`}
+      style={{ transition: 'background 0.3s, color 0.3s' }}
+    >
       <div className="container" style={{ maxWidth: '1100px' }}>
-        <a className={`navbar-brand ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold'}`} href="#">
+        <Link
+          className={`navbar-brand ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold'}`}
+          to="/"
+        >
           <img
             src="/home/bejiness-logo.png"
-            width="30"
-            height="30"
+            width="40"
+            height="40"
             className="d-inline-block align-top"
             alt="Logo"
           />
-        </a>
-        
-        {/* Hamburger icon for mobile */}
+        </Link>
+
         <button
           className="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
           aria-label="Toggle navigation"
@@ -57,20 +56,28 @@ const Navbar = () => {
         <div className={`collapse navbar-collapse justify-content-end ${isMobileMenuOpen ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className={`nav-link ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold mob-noscroll'}`} href="#">
+              <Link
+                className={`nav-link ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold mob-noscroll'}`}
+                to="/blog"
+              >
                 Blog
-              </a>
+              </Link>
             </li>
-            {/* <li className={`nav-item ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold'}`}>|</li> */}
             <li className="nav-item">
-              <a className={`nav-link ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold mob-noscroll'}`} href="/login">
+              <Link
+                className={`nav-link ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold mob-noscroll'}`}
+                to="/login"
+              >
                 Login
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className={`nav-link ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold mob-noscroll'}`} href="/signup">
+              <Link
+                className={`nav-link ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold mob-noscroll'}`}
+                to="/signup"
+              >
                 Sign Up
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
