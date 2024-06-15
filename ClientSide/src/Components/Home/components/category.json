@@ -1,0 +1,21 @@
+
+{
+  "description": "A list of fruits.",
+  "fruits": [
+    "Agri products & Equipments",
+    	"Apparel & Fashion",
+	"Automobile Spares & parts",
+	"Bags and Luggage",
+	"Beauty, Cosmetics & Care",
+	"Books, Stationery & Office supplies",
+	"Chemicals, dyes & solvents",
+	"Construction supplies",
+	"Electricals & lights",
+	"Electronics & Computers",
+	"Footwear",
+	"Furniture & Interior Decorative",
+	"Hardware & paints",
+	"Home & kitchen appliances",
+	"Industrial equipments",
+	"Tiles & Ceramics"]
+}

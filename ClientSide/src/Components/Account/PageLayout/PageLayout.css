@@ -1,0 +1,26 @@
+.nav-bg-blue{
+    background-color: #050a30!important;
+}
+
+
+.search-bar-container {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  @media (min-width: 992px) {
+    .search-bar-container {
+      position: relative;
+      flex-wrap: nowrap;
+    }
+  
+    .search-bar {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  
+    .nav-icons {
+      right: 0;
+    }
+  }

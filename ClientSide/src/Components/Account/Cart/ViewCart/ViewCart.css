@@ -1,0 +1,41 @@
+
+  .cart-item-row{
+    display: flex;
+    align-items: center;
+  }
+
+    .total-amt-bor{
+      border: 2px dashed #ffae23;
+
+    }
+  .cart-item-mrg{
+    margin-top: 25px;
+  }
+
+  .total-p-fix{
+    position: fixed
+  }
+
+ 
+.cart-img {
+  max-height: 80px; /* Adjust the maximum width as needed */
+  margin-right: 20px; /* Add margin for spacing */
+}
+
+@media (max-width: 800px) {
+  .total-amount-container{
+    position: fixed;
+    bottom: 0;
+    background-color: black;
+    display: flex;
+    color: white;
+    min-width: 100%;
+    margin-left: -22px;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .viewcart-main{
+    padding-bottom: 50px;
+  }
+}

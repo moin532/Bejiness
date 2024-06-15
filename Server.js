@@ -14,7 +14,7 @@ const port = process.env.PORT || 5000;
 
 //frontend
 const _dirname = path.resolve()
-const buildPath = path.join(_dirname, "./dist")
+const buildPath = path.join(_dirname, "./ClientSide/dist")
 app.use(express.static(buildPath));
 
 

@@ -1,0 +1,27 @@
+.add-card{
+    justify-content: center;
+    align-items: center;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.add-card:hover{
+    opacity: 1;
+}
+
+.seller-prod-card{
+    max-width: 200px
+}
+
+
+@media (max-width: 800px) {
+    .seller-prod-card{
+        max-width: 160px;
+        padding: 0 8px;
+        
+    }
+    .profile-details{
+        margin:10px;
+    }
+}

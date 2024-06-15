@@ -1,0 +1,17 @@
+body {
+    background-color: #ffffff;
+}
+
+button {
+    margin: 5px;
+}
+
+body{
+    margin:90px 40px;
+}
+
+@media (max-width: 800px) {
+    body{
+        margin: 100px 10px
+    }
+}
