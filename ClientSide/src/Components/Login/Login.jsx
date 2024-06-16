@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './Login.css';
 import { URL } from '../Auth/Auth';
@@ -8,6 +8,14 @@ import Loader from "../Loader/Loader"
 function Login() {
     const navigate = useNavigate();
     const { setToken } = useAuth();
+
+    const { hasToken } = useAuth();
+
+    useEffect(() => {
+        if (hasToken) {
+            navigate("/dashboard")
+        }
+    }, [])
 
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
@@ -51,49 +59,49 @@ function Login() {
     }
 
     return (
-        <div className="login-body" style={{marginTop:"-90px"}}>
-        <div className="container login-container">
-       <img src="/home/bejiness-logo.png" alt="logo" style={{width:"80px"}} />
+        <div className="login-body" style={{ marginTop: "-90px" }}>
+            <div className="container login-container">
+                <img src="/home/bejiness-logo.png" alt="logo" style={{ width: "80px" }} />
 
-            {
-            isLoading?
-            <Loader />
-            :
-            <form className="form-container mt-2 login-form-container" onSubmit={loginSubmitHandler}>
-                <h1>Login</h1>
+                {
+                    isLoading ?
+                        <Loader />
+                        :
+                        <form className="form-container mt-2 login-form-container" onSubmit={loginSubmitHandler}>
+                            <h1>Login</h1>
 
-                <div className="mb-3">
-                    <label htmlFor="phone_number" className="form-label">Phone Number</label>
-                    <input
-                        type="text"
-                        className="form-control login-form-control"
-                        id="inputEmail3"
-                        placeholder="Enter your Phone Number"
-                        onChange={handlePhoneNumberChange}
-                        value={phoneNumber}
-                    />
-                </div>
+                            <div className="mb-3">
+                                <label htmlFor="phone_number" className="form-label">Phone Number</label>
+                                <input
+                                    type="text"
+                                    className="form-control login-form-control"
+                                    id="inputEmail3"
+                                    placeholder="Enter your Phone Number"
+                                    onChange={handlePhoneNumberChange}
+                                    value={phoneNumber}
+                                />
+                            </div>
 
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input
-                        type="password"
-                        className="form-control login-form-control"
-                        id="inputPassword3"
-                        placeholder="Enter your Password"
-                        onChange={handlePasswordChange}
-                        value={password}
-                    />
-                </div>
+                            <div className="mb-3">
+                                <label htmlFor="password" className="form-label">Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control login-form-control"
+                                    id="inputPassword3"
+                                    placeholder="Enter your Password"
+                                    onChange={handlePasswordChange}
+                                    value={password}
+                                />
+                            </div>
 
-                <div className="mb-3">
-                    <button type="submit" className="btn btn-warning" 
-                style={{ width: '100%' }}>Log In</button>
-                    <Link to="/signup" className="mt-2 d-block text-center">Don't have an account?</Link>
-                </div>
-            </form>
-            }
-        </div>
+                            <div className="mb-3">
+                                <button type="submit" className="btn btn-warning"
+                                    style={{ width: '100%' }}>Log In</button>
+                                <Link to="/signup" className="mt-2 d-block text-center">Don't have an account?</Link>
+                            </div>
+                        </form>
+                }
+            </div>
         </div>
     )
 }

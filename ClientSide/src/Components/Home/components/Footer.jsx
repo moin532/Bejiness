@@ -1,11 +1,12 @@
 import React from 'react';
 // import ContactUs from '../pages/contact/ContactUs';
 import { Link } from 'react-router-dom';
+import './Footer.css'
 
 const Footer = () => {
   return (
 
-    <footer className="bg-light text-dark p-4">
+    <footer className="bg-dark text-light p-4">
       <div className="container">
         <div className="row">
           <div className="col-md-3">
@@ -17,10 +18,10 @@ const Footer = () => {
                 <span><i class="fab fa-facebook-f"></i></span>
               </Link>
               
-              <Link href="#" class="icon twitter">
+              {/* <Link href="#" class="icon twitter">
                 <div class="tooltip">Twitter</div>
                 <span><i class="fab fa-twitter"></i></span>
-              </Link>
+              </Link> */}
               
               <Link href="#" class="icon instagram">
                 <div class="tooltip">Instagram</div>
@@ -32,10 +33,10 @@ const Footer = () => {
                 <span><i class="fab fa-github"></i></span>
               </Link> */}
               
-              <Link href="#" class="icon youtube">
+              {/* <Link href="#" class="icon youtube">
                 <div class="tooltip">Youtube</div>
                 <span><i class="fab fa-youtube"></i></span>
-              </Link>
+              </Link> */}
             </div>
           </div>
 

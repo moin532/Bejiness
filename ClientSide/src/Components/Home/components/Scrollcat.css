@@ -1,14 +1,14 @@
 .s-App {
   font-family: sans-serif;
   text-align: center;
-  width: 95vw;
+  width: 100%;
   height: 30vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.s-head{
+.s-head {
   font-family: Poppins;
   font-style: normal;
   font-weight: 600;
@@ -16,7 +16,7 @@
   line-height: 60px;
   text-align: center;
   letter-spacing: -.03em;
-  font-feature-settings: "ss01" on,"ss02" on,"ss03" on,"ss04" on;
+  font-feature-settings: "ss01" on, "ss02" on, "ss03" on, "ss04" on;
   color: #020815;
 }
 
@@ -25,11 +25,12 @@
   align-items: center;
   list-style: none;
   max-width: 100%;
-  overflow-x: scroll;
+  overflow: hidden;
   scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
-    background: transparent; /* make scrollbar transparent */
+    background: transparent;
+    /* make scrollbar transparent */
     -webkit-appearance: none;
     width: 0;
     height: 0;
@@ -50,7 +51,7 @@
 .s-button {
   border: 0;
   color: #000;
-  background-color: rgba(5, 10, 48, 0) ;
+  background-color: rgba(5, 10, 48, 0);
   font-size: 24px;
   margin: 0 8px;
 }
@@ -61,16 +62,16 @@
 
 
 
-.material-symbols-outlined-arrow{
+.material-symbols-outlined-arrow {
   background-color: gold;
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 /* Add this media query to adjust styles for smaller screens */
 @media (max-width: 768px) {
-  .s-App {
-    /* flex-direction: column; Display tags in a single column for mobile */
-  }
+  /* .s-App {
+    flex-direction: column; Display tags in a single column for mobile
+  } */
 
   .s-li {
     background: #ffb12c;
@@ -80,6 +81,7 @@
     margin: 0 1px;
     font-size: 15px;
     white-space: nowrap;
-    margin-bottom: 8px; /* Add margin between tags for better spacing */
+    margin-bottom: 8px;
+    /* Add margin between tags for better spacing */
   }
 }

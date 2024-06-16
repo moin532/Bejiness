@@ -33,30 +33,31 @@ function App() {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
 
-        {
-          (hasToken) ? (
-            <>
-              <Route path="/dashboard" element={<SellerDashboard />} />
-              <Route path="/seller_profile" element={<Profile />} />
-              <Route path="/products" element={<SellerProducts />} />
-              <Route path="/add_product" element={<AddProduct />} />
-              <Route path="/product_details/:productId" element={<ProductDetails />} />
-              <Route path="/edit_product/:productId" element={<EditProduct />} />
-              <Route path="/buyer_profile" element={<BuyerProfile />} />
-              <Route path="/order_details/:orderId" element={<OrderDetails />} />
-              <Route path="/view_cart" element={<ViewCart />} />
-              <Route path="/payment" element={<OrderPayment />} />
-              <Route path="/contactus" element={<ContactUs />} />
-              <Route path="/AboutUs" element={<AboutUs />} />
-              <Route path="/notifications" element={<Notification />} />
-              <Route path="/notificationdetails/:id" element={<NotificationDetails />} />
+        {/* {
+          (hasToken) ? ( */}
+        <>
+          <Route path="/dashboard" element={<SellerDashboard />} />
+          <Route path="/seller_profile" element={<Profile />} />
+          <Route path="/products" element={<SellerProducts />} />
+          <Route path="/add_product" element={<AddProduct />} />
+          <Route path="/product_details/:productId" element={<ProductDetails />} />
+          <Route path="/edit_product/:productId" element={<EditProduct />} />
+          <Route path="/buyer_profile" element={<BuyerProfile />} />
+          <Route path="/order_details/:orderId" element={<OrderDetails />} />
+          <Route path="/view_cart" element={<ViewCart />} />
+          <Route path="/payment" element={<OrderPayment />} />
+          <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/notifications" element={<Notification />} />
+          <Route path="/notificationdetails/:id" element={<NotificationDetails />} />
 
-            </>
-          ) : (
+        </>
+        {/* ) : ( */}
 
 
-            <Route path="/*" element={<Navigate to="/" />} />)
-        }
+        <Route path="/*" element={<Navigate to="/" />} />
+        {/* )
+        } */}
 
 
       </Routes>

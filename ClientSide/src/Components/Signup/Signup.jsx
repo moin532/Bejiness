@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { URL } from '../Auth/Auth';
 import "./Signup.css"
 import Loader from '../Loader/Loader';
+import { useAuth } from '../Auth/AuthContext';
 
 function Signup() {
     const navigate = useNavigate();
+
+    const { hasToken } = useAuth();
+
+    useEffect(() => {
+        if (hasToken) {
+            navigate("/dashboard")
+        }
+    }, [])
 
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
@@ -98,7 +107,9 @@ function Signup() {
     return (
         <div className="signup-body" style={{ marginTop: "-90px" }}>
             <div className="container signup-container">
-                <img src="\src\assets\logo-bgremoved.png" alt="logo" style={{ width: "80px" }} />
+                <Link to="/">
+                    <img src="\src\assets\logo-bgremoved.png" alt="logo" style={{ width: "80px" }} />
+                </Link>
                 {
                     isLoading ?
                         <Loader />
