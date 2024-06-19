@@ -1,9 +1,7 @@
 import React from "react";
 
 const Tag = ({ data }) => {
-  return <>
-  <li>{data}</li>
-  </>;
+  return <> {data} </>;
 };
 
 export default Tag;

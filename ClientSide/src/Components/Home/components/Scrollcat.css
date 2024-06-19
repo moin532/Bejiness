@@ -5,7 +5,8 @@
   height: 30vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Center content horizontally */
+  overflow: hidden; /* Hide overflow to enable seamless scrolling */
 }
 
 .s-head {
@@ -15,7 +16,7 @@
   font-size: 50px;
   line-height: 60px;
   text-align: center;
-  letter-spacing: -.03em;
+  letter-spacing: -0.03em;
   font-feature-settings: "ss01" on, "ss02" on, "ss03" on, "ss04" on;
   color: #020815;
 }
@@ -24,28 +25,25 @@
   display: flex;
   align-items: center;
   list-style: none;
-  max-width: 100%;
-  overflow: hidden;
+  width: 100%; /* Ensure it takes full width */
+  overflow: hidden; /* Hide the scrollbar */
   scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
 
   &::-webkit-scrollbar {
-    background: transparent;
-    /* make scrollbar transparent */
-    -webkit-appearance: none;
-    width: 0;
-    height: 0;
+    display: none; /* Hide scrollbar */
   }
+}
 
-
-  li {
-    background: #ffb12c;
-    color: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    margin: 0 4px;
-    font-size: 25px;
-    white-space: nowrap;
-  }
+.s-ul li {
+  background: #ffb12c;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 0 4px;
+  font-size: 25px;
+  white-space: nowrap;
 }
 
 .s-button {
@@ -56,32 +54,23 @@
   margin: 0 8px;
 }
 
-.s-button ::hover {
+.s-button:hover {
   border: 0;
 }
-
-
 
 .material-symbols-outlined-arrow {
   background-color: gold;
   border-radius: 50%;
 }
 
-/* Add this media query to adjust styles for smaller screens */
+/* Media query to adjust styles for smaller screens */
 @media (max-width: 768px) {
-  /* .s-App {
-    flex-direction: column; Display tags in a single column for mobile
-  } */
-
-  .s-li {
-    background: #ffb12c;
-    color: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    margin: 0 1px;
+  .s-ul li {
     font-size: 15px;
-    white-space: nowrap;
+    margin: 0 1px;
     margin-bottom: 8px;
-    /* Add margin between tags for better spacing */
+  }
+  .s-ul{
+    overflow-x: scroll;
   }
 }
