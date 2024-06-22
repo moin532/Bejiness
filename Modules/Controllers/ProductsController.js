@@ -1,8 +1,26 @@
 const jwt = require('jsonwebtoken')
-
+const cloudinary = require('cloudinary');
 const UserAccountDB = require('../Models/UserModel.js')
 const ProductDB = require('../Models/ProductModel.js')
+const fs = require('fs');
 
+
+
+// const filePath = 'C:\\Users\\moinMK123\\Desktop\\Bejiness-main\\d';
+// console.log(`Attempting to open file at path: ${filePath}`);
+
+// fs.open(filePath, 'r', (err, fd) => {
+//   if (err) {
+//     if (err.code === 'ENOENT') {
+//       console.error('File not found:', filePath);
+//     } else {
+//       console.error('An error occurred:', err);
+//     }
+//     return;
+//   }
+//   console.log('File opened successfully:', filePath);
+//   // Continue with file operations
+// });
 // const cloudinary = require('cloudinary').v2
 
 // Configure Cloudinary
@@ -16,6 +34,9 @@ const ProductDB = require('../Models/ProductModel.js')
 exports.UploadProduct = async (req, res) => {
     try {
 
+console.log(req.body);
+
+        
         const { token } = req.headers;
         const { product_name, description, prices, specs, category_type } = req.body;
 
@@ -38,9 +59,33 @@ exports.UploadProduct = async (req, res) => {
             });
         }
 
-        //         cloudinary.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
-        //   { public_id: "olympic_flag" },
-        //   function(error, result) {console.log(result); });
+        let images = [];
+
+        if (typeof req.body.product_image === "string") {
+            images.push(req.body.product_image);
+            
+        } else {
+            images = req.body.product_image
+        }
+
+        let imagesLinks = [];
+        let imagesLinksPublicId = [];
+        let imagesLinksUrl = [];
+        
+
+        console.log(imagesLinks);
+        for(let i=0 ; i< images.length ; i++) {
+            const result = await cloudinary.v2.uploader.upload(images[i],{
+                folder : "products"
+            })
+
+            imagesLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url,
+              });
+              imagesLinksPublicId.push(result.public_id)
+              imagesLinksUrl.push(result.secure_url);
+        }
 
         const Product = await ProductDB.create({
             sellerId: UserData.sellerId,
@@ -49,7 +94,12 @@ exports.UploadProduct = async (req, res) => {
             description: description,
             prices: JSON.parse(prices),
             specs: JSON.parse(specs),
-            images: JSON.stringify(req.files)
+            images: [
+                {
+                    public_id : imagesLinksPublicId,
+                    url : imagesLinksUrl
+                }
+            ]
         });
 
         return res.status(200).json({
@@ -57,6 +107,7 @@ exports.UploadProduct = async (req, res) => {
             product_id: Product._id
         });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             success: false,
             content: error.message
@@ -97,7 +148,8 @@ exports.GetProduct = async (req, res) => {
             });
         }
 
-        const ProductImagesUrls = JSON.parse(product.images).map((ele) => '/' + ele.filename);
+      
+        // const ProductImagesUrls = JSON.parse(product.images).map((ele) => '/' + ele.filename);
 
         return res.status(200).json({
             success: true,
@@ -107,7 +159,7 @@ exports.GetProduct = async (req, res) => {
             prices: product.prices,
             onsale: product.onSale,
             specs: product.specs,
-            images: ProductImagesUrls,
+            images: product.images,
         });
     } catch (error) {
         return res.status(500).json({
@@ -158,7 +210,7 @@ exports.GetSellerProducts = async (req, res) => {
                 category_type: Data.categoryType,
                 description: Data.description,
                 prices: Data.prices,
-                images: JSON.parse(Data.images).map((ele) => '/' + ele.filename),
+                images: Data.images[0].url
             });
         })
 
@@ -324,13 +376,14 @@ exports.GetCategory = async (req, res) => {
         const resultProducts = []
 
         Products.forEach((Data) => {
+        
             resultProducts.push({
                 product_id: Data._id,
                 product_name: Data.productName,
                 category_type: Data.categoryType,
                 description: Data.description,
                 prices: Data.prices,
-                images: JSON.parse(Data.images).map((ele) => '/' + ele.filename),
+                images: Data.images[0].url,
             });
         })
 

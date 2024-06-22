@@ -41,9 +41,7 @@ const productSchema = new Schema({
   categoryType: {
     type: String
   },
-  images: [{
-    type: String // the image is stored as a URL
-  }],
+ images: [],
   sellerId: {
     type: Schema.Types.ObjectId,
     ref: 'Seller',
