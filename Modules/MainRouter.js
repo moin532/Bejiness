@@ -6,7 +6,7 @@ const OrdersController = require('./Controllers/OrdersController')
 const PaymentController = require('./Controllers/PaymentController')
 const CartController = require('./Controllers/CartController')
 
-const Middlewares = require('./Middlewares')
+// const Middlewares = require('./Middlewares')
 
 const UserRoutes = express.Router()
 const ProductRoutes = express.Router()
@@ -28,7 +28,7 @@ UserRoutes
 ProductRoutes
     .get('/seller', ProductsController.GetSellerProducts)
     .post('/category', ProductsController.GetCategory)
-    .post('/upload', Middlewares.upload.array("product_image", 5), ProductsController.UploadProduct)
+    .post('/upload', ProductsController.UploadProduct)
     .get('/:productId', ProductsController.GetProduct)
     .put('/:productId', ProductsController.UpdateProduct)
     .delete('/:productId', ProductsController.DeleteProduct)
