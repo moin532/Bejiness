@@ -5,29 +5,30 @@ import "./Scrollcat.css";
 
 const Scrollcat = () => {
   const scrl = useRef();
+  const animationFrameId = useRef(null);
 
   useEffect(() => {
     const scrollList = () => {
       if (scrl.current) {
-        // Check if the scroll position is near the end of the first set
-        if (scrl.current.scrollLeft >= scrl.current.scrollWidth / 2) {
-          // Reset to the middle position
-          scrl.current.scrollLeft = scrl.current.scrollLeft - scrl.current.scrollWidth / 2;
+        if (scrl.current.scrollLeft >= (scrl.current.scrollWidth / 2)) {
+          scrl.current.scrollLeft = 0;
         } else {
-          // Scroll to the right
-          scrl.current.scrollLeft += 1; // Adjust this value to control scroll speed
+          scrl.current.scrollLeft += 1; 
         }
       }
+      animationFrameId.current = requestAnimationFrame(scrollList);
     };
 
-    // Initial scroll position
-    scrl.current.scrollLeft = scrl.current.scrollWidth / 2;
+    // Set initial scroll position to half the scroll width to start the animation in the middle
+    if (scrl.current) {
+      scrl.current.scrollLeft = scrl.current.scrollWidth / 4;
+    }
 
-    // Run the scroll function at a set interval
-    const scrollInterval = setInterval(scrollList, 10); // Adjust this value to control scroll frequency
+    // Start the animation
+    animationFrameId.current = requestAnimationFrame(scrollList);
 
-    // Clean up the interval on component unmount
-    return () => clearInterval(scrollInterval);
+    // Clean up the animation frame on component unmount
+    return () => cancelAnimationFrame(animationFrameId.current);
   }, []);
 
   return (
@@ -38,7 +39,7 @@ const Scrollcat = () => {
       <div className="s-App">
         <ul className="s-ul" ref={scrl}>
           {[...data.fruits, ...data.fruits].map((d, i) => (
-            <li key={i} className="s-li">
+            <li key={i}>
               <Tag data={d} />
             </li>
           ))}

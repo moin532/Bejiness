@@ -21,6 +21,7 @@ import ContactUs from './Components/Home/pages/contact/ContactUs'
 import AboutUs from './Components/Home/pages/about/AboutUs'
 import Notification from './Components/Account/Profile/Seller/Notification/Notification'
 import NotificationDetails from './Components/Account/Profile/Seller/Notification/NotificationDetails/NotificationDetails'
+import PostRequirement from './Components/Home/PostRequirements/postrequirement'
 
 function App() {
   const { hasToken } = useAuth();
@@ -32,6 +33,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/post_requirements" element={<PostRequirement />} />
 
         {/* {
           (hasToken) ? ( */}

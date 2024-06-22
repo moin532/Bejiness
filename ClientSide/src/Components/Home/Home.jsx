@@ -31,7 +31,7 @@ export default function Home() {
       <Explore />
       <Join />
       <Footer />
-      {/* <Post /> */}
+      <Post />
     </div>
   )
 }

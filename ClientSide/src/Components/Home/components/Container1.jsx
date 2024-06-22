@@ -20,7 +20,7 @@ export default function Container1() {
             </div>
             <input
               placeholder="Search on Bejiness.com"
-              value=""
+              defaultValue=""
               className="search-input"
             // style={{width:"200px"}}
             />
