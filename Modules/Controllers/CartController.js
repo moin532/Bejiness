@@ -69,84 +69,102 @@ exports.GetCart = async (req, res) => {
     try {
         const { token } = req.headers;
 
-        const DecodedToken = jwt.verify(token, process.env.JWTKEY);
-
-        if (!DecodedToken) {
+        // Verify the token
+        const decodedToken = jwt.verify(token, process.env.JWTKEY);
+        if (!decodedToken) {
             return res.status(400).json({
                 success: false,
-                content: "invalid token"
+                content: "Invalid token"
             });
         }
-        const UserData = await UserAccountDB.findById(DecodedToken.UserId);
 
-        const UserCart = await ShoppingCart.findById(UserData.shoppingCartId);
-
-        let CartItems = [];
-
-        const fetchCartItemDetails = async (item) => {
-            try {
-                const product = await ProductDB.findById(item.productId);
-                const sellerData = await SellerDB.findById(product.sellerId);
-                const ProductImagesUrls = JSON.parse(product.images).map((ele) => '/' + ele.filename);
-
-                const cartDetails = {
-                    product_name: product.productName,
-                    prices: product.prices,
-                    seller: sellerData.companyName,
-                    product_category: product.categoryType,
-                    product_id: product._id,
-                    product_image: ProductImagesUrls,
-                    quantity: item.quantity
-                };
-
-                return cartDetails;
-            } catch (error) {
-                console.error('Error fetching cart item details:', error);
-                throw error;
-            }
-        };
-
-        const cartItemDetailsArray = await Promise.all(UserCart.productDetails.map(fetchCartItemDetails));
-
-        CartItems = [...cartItemDetailsArray];
-        
-        let totalAmount = 0;
-
-        for (const cartItem of UserCart.productDetails) {
-            const currProduct = await ProductDB.findById(cartItem.productId);
-            const quantity = cartItem.quantity;
-
-            let applicablePrice = 0;
-
-            for (const price of currProduct.prices) {
-                if (
-                    (!price.quantityRange.min || quantity >= price.quantityRange.min) &&
-                    (!price.quantityRange.max || quantity <= price.quantityRange.max)
-                ) {
-                    applicablePrice = price.price;
-                    break;
-                }
-            }
-
-            totalAmount += applicablePrice * quantity;
+        // Fetch user data
+        const userData = await UserAccountDB.findById(decodedToken.UserId);
+        if (!userData) {
+            return res.status(404).json({
+                success: false,
+                content: "User not found"
+            });
         }
 
+        // Fetch user's cart
+        const userCart = await ShoppingCart.findById(userData.shoppingCartId);
+        if (!userCart) {
+            return res.status(404).json({
+                success: false,
+                content: "Cart not found"
+            });
+        }
+
+        // Fetch all products concurrently
+        const productIds = userCart.productDetails.map(item => item.productId);
+        const products = await ProductDB.find({ _id: { $in: productIds } });
+
+        // Create a map for quick access to products
+        const productMap = new Map(products.map(product => [product._id.toString(), product]));
+
+        // Fetch all sellers concurrently
+        const sellerIds = Array.from(new Set(products.map(product => product.sellerId)));
+        const sellers = await SellerDB.find({ _id: { $in: sellerIds } });
+
+        // Create a map for quick access to sellers
+        const sellerMap = new Map(sellers.map(seller => [seller._id.toString(), seller]));
+
+        // Generate cart item details
+        const cartItems = userCart.productDetails.map(item => {
+            const product = productMap.get(item.productId.toString());
+            if (!product) return null;
+
+            const seller = sellerMap.get(product.sellerId.toString());
+            if (!seller) return null;
+
+            return {
+                product_name: product.productName,
+                prices: product.prices,
+                seller: seller.companyName,
+                product_category: product.categoryType,
+                product_id: product._id,
+                product_image: product.images[0]?.url, // Handle the case where images might be empty
+                quantity: item.quantity
+            };
+        }).filter(item => item !== null); // Filter out any null values
+
+        // Calculate total amount
+        let totalAmount = 0;
+        userCart.productDetails.forEach(item => {
+            const product = productMap.get(item.productId.toString());
+            if (!product) return; // Skip if the product is not found
+
+            const quantity = item.quantity;
+
+            // Find the applicable price
+            const applicablePrice = product.prices.find(price => 
+                (!price.quantityRange.min || quantity >= price.quantityRange.min) &&
+                (!price.quantityRange.max || quantity <= price.quantityRange.max)
+            )?.price || 0;
+
+            totalAmount += applicablePrice * quantity;
+        });
+
+        // Send response
         return res.status(200).json({
             success: true,
             cart_items: {
-                product_details: CartItems,
-                status: UserCart.status,
-                total_amount: totalAmount,
-            },
+                product_details: cartItems,
+                status: userCart.status,
+                total_amount: totalAmount
+            }
         });
 
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             success: false,
             content: error.message
         });
     }
 }
+
 
 // DELETE http://localhost:3000/api/users/cart/delete-item
 exports.DeleteItem = async (req, res) => {

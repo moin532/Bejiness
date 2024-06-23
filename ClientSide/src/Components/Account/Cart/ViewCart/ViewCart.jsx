@@ -3,7 +3,6 @@ import PageLayout from '../../PageLayout/PageLayout';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { DeleteCart, DeleteItem, GetItems, UpdateQuantity } from '../../../ApiCallModules/Apis';
-import { URL } from '../../../Auth/Auth';
 import Loader from '../../../Loader/Loader';
 
 function ViewCart() {
@@ -20,7 +19,7 @@ function ViewCart() {
     await GetItems().then((cartData) => {
       setCartItems(cartData.cart_items.product_details);
       setTotalAmount(cartData.cart_items.total_amount);
-      console.log(cartData.cart_items)
+      // console.log(cartData.cart_items)
       setIsLoading(false)
     })
   };
@@ -29,11 +28,11 @@ function ViewCart() {
     const totalQuantity = cartItems.reduce((accumulator, item) => {
       return accumulator + item.quantity;
     }, 0);
-  
+
     // Set the total quantity using the setQuantity function
     setQuantity(totalQuantity);
   }, [cartItems]);
-  
+
 
   useEffect(() => {
     fetchCartItems();
@@ -85,7 +84,7 @@ function ViewCart() {
                         <div className="col-md-8 product-details">
                           <div className="d-flex align-items-center">
 
-                            <img src={URL + item.product_image[0]} alt="" className="cart-img border shadow-lg" />
+                            <img src={item.product_image} alt="" className="cart-img border shadow-lg" />
 
 
                             <div className="ml-3">

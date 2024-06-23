@@ -56,11 +56,6 @@ function SellerProducts() {
       }
   }
 
-  // const addItemHandler = (productId) => {
-  //   // Add logic for handling item addition
-  //   console.log(`Adding item with ID: ${productId}`);
-  // };
-
   return (
     <>
       <PageLayout />
@@ -80,7 +75,7 @@ function SellerProducts() {
                     className="card-img-top"
                     height={100}
                     width={100}
-                    src={URL + product.images[0]}
+                    src={product.images}
                     alt={product.product_name}
                   />
                   <div className="card-body flex-grow-1 d-flex flex-column">

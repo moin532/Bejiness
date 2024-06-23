@@ -3,7 +3,7 @@ import { BiSearchAlt } from 'react-icons/bi';
 import { IoNotificationsSharp } from 'react-icons/io5';
 import { FaCartPlus } from 'react-icons/fa6';
 import { CgProfile } from 'react-icons/cg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Auth/AuthContext';
 import { GetUser } from '../../ApiCallModules/Apis';
 import './PageLayout.css';
@@ -11,7 +11,8 @@ import './PageLayout.css';
 export default function PageLayout({ children }) {
   const { setToken } = useAuth();
   const [userData, setUserData] = useState({});
-  const [searchQuery, setSearchQuery] = useState('');
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +22,12 @@ export default function PageLayout({ children }) {
 
     fetchData();
   }, []);
+
+  const handleSearch = () => {
+    if (query.trim()) {
+      navigate(`/dashboard/search?q=${encodeURIComponent(query)}`);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.setItem('token', '');
@@ -45,16 +52,20 @@ export default function PageLayout({ children }) {
           </Link>
 
           <div className="d-flex align-items-center search-bar-container">
+
+
             {/* Search Bar */}
             <div className="search-bar d-none d-lg-block d-xl-block">
               <input
                 type="text"
                 placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ fontSize: "22px" }}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                required
               />
-              <BiSearchAlt size={20} />
+              <button className='nav-search-button' onClick={() => handleSearch()}>
+                <BiSearchAlt size={25} />
+              </button>
             </div>
 
             <div className="nav-icons ms-auto" style={{ display: 'flex' }}>

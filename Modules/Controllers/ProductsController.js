@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken')
 const cloudinary = require('cloudinary');
 const UserAccountDB = require('../Models/UserModel.js')
 const ProductDB = require('../Models/ProductModel.js')
-const fs = require('fs');
-
+const SellerDB = require('../Models/SellerModel.js')
 
 
 // const filePath = 'C:\\Users\\moinMK123\\Desktop\\Bejiness-main\\d';
@@ -34,9 +33,9 @@ const fs = require('fs');
 exports.UploadProduct = async (req, res) => {
     try {
 
-console.log(req.body);
+        console.log(req.body);
 
-        
+
         const { token } = req.headers;
         const { product_name, description, prices, specs, category_type } = req.body;
 
@@ -63,28 +62,21 @@ console.log(req.body);
 
         if (typeof req.body.product_image === "string") {
             images.push(req.body.product_image);
-            
+
         } else {
             images = req.body.product_image
         }
 
-        let imagesLinks = [];
         let imagesLinksPublicId = [];
         let imagesLinksUrl = [];
-        
 
-        console.log(imagesLinks);
-        for(let i=0 ; i< images.length ; i++) {
-            const result = await cloudinary.v2.uploader.upload(images[i],{
-                folder : "products"
+        for (let i = 0; i < images.length; i++) {
+            const result = await cloudinary.v2.uploader.upload(images[i], {
+                folder: "products"
             })
 
-            imagesLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-              });
-              imagesLinksPublicId.push(result.public_id)
-              imagesLinksUrl.push(result.secure_url);
+            imagesLinksPublicId.push(result.public_id)
+            imagesLinksUrl.push(result.secure_url);
         }
 
         const Product = await ProductDB.create({
@@ -94,12 +86,7 @@ console.log(req.body);
             description: description,
             prices: JSON.parse(prices),
             specs: JSON.parse(specs),
-            images: [
-                {
-                    public_id : imagesLinksPublicId,
-                    url : imagesLinksUrl
-                }
-            ]
+            images: [imagesLinksUrl]
         });
 
         return res.status(200).json({
@@ -148,7 +135,7 @@ exports.GetProduct = async (req, res) => {
             });
         }
 
-      
+
         // const ProductImagesUrls = JSON.parse(product.images).map((ele) => '/' + ele.filename);
 
         return res.status(200).json({
@@ -367,16 +354,17 @@ exports.GetCategory = async (req, res) => {
 
         let Products;
 
-        if(category_type !== "all"){
-            Products = await ProductDB.find({ categoryType: category_type })
-        }else{
-            Products = await ProductDB.find()
+        if (category_type !== "all") {
+            Products = await ProductDB.find({ categoryType: category_type });
+        } else {
+            Products = await ProductDB.find();
         }
 
-        const resultProducts = []
+        const resultProducts = [];
 
-        Products.forEach((Data) => {
-        
+        for (const Data of Products) {
+            const Seller = await SellerDB.findById(Data.sellerId);
+
             resultProducts.push({
                 product_id: Data._id,
                 product_name: Data.productName,
@@ -384,13 +372,67 @@ exports.GetCategory = async (req, res) => {
                 description: Data.description,
                 prices: Data.prices,
                 images: Data.images[0].url,
+                seller: {
+                    seller_company: Seller.companyName,
+                    seller_type: Seller.bussinessType,
+                    is_seller_verified: Seller.kycIsVerified,
+                }
             });
-        })
+        }
 
         return res.status(200).json({
             success: true,
             products: resultProducts
         });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            content: error.message
+        });
+    }
+};
+
+
+// GET http://localhost:3000/api/products/search?q=product_search
+exports.SearchProducts = async (req, res) => {
+    try {
+        const searchQuery = req.query.q;
+
+        const regex = new RegExp(searchQuery, 'i'); 
+    
+        const products = await ProductDB.find({
+          $or: [
+            { name: regex },
+            { description: regex }
+          ]
+        });
+        
+        const resultProducts = []
+
+        for (const Data of products) {
+            const Seller = await SellerDB.findById(Data.sellerId);
+
+            resultProducts.push({
+                product_id: Data._id,
+                product_name: Data.productName,
+                category_type: Data.categoryType,
+                description: Data.description,
+                prices: Data.prices,
+                images: Data.images[0].url,
+                seller: {
+                    seller_company: Seller.companyName,
+                    seller_type: Seller.bussinessType,
+                    is_seller_verified: Seller.kycIsVerified,
+                }
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            products: resultProducts
+        });
+        
     } catch (error) {
         console.log(error);
         return res.status(500).json({
