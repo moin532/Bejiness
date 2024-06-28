@@ -21,8 +21,13 @@ import ContactUs from './Components/Home/pages/contact/ContactUs'
 import AboutUs from './Components/Home/pages/about/AboutUs'
 import Notification from './Components/Account/Profile/Seller/Notification/Notification'
 import NotificationDetails from './Components/Account/Profile/Seller/Notification/NotificationDetails/NotificationDetails'
+<<<<<<< HEAD
 import Blog from './Components/Blog/Blog'
 import BlogDetail from './Components/Blog/BlogDetails'
+=======
+import PostRequirement from './Components/Home/PostRequirements/postrequirement'
+
+>>>>>>> 7decf4ef565338724599454c78a78db69ef1b42a
 function App() {
   const { hasToken } = useAuth();
 
@@ -33,7 +38,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+<<<<<<< HEAD
         {/* <Route path="/post_requirements" element={<PostRequirement />} /> */}
+=======
+        <Route path="/post_requirements" element={<PostRequirement />} />
+>>>>>>> 7decf4ef565338724599454c78a78db69ef1b42a
 
         {/* {
           (hasToken) ? ( */}
