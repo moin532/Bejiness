@@ -58,7 +58,7 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${scrolled ? 'text-dark font-weight-bold' : 'text-white font-weight-bold mob-noscroll'}`}
-                to="/blog"
+                to="/blogs"
               >
                 Blog
               </Link>

@@ -259,3 +259,4 @@ export const DeleteCart = async () => {
         throw error; // Propagate the error
     }
 }
+
