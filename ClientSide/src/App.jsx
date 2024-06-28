@@ -21,6 +21,8 @@ import ContactUs from './Components/Home/pages/contact/ContactUs'
 import AboutUs from './Components/Home/pages/about/AboutUs'
 import Notification from './Components/Account/Profile/Seller/Notification/Notification'
 import NotificationDetails from './Components/Account/Profile/Seller/Notification/NotificationDetails/NotificationDetails'
+import Blog from './Components/Blog/Blog'
+import BlogDetail from './Components/Blog/BlogDetails'
 
 function App() {
   const { hasToken } = useAuth();
@@ -50,6 +52,11 @@ function App() {
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/notifications" element={<Notification />} />
           <Route path="/notificationdetails/:id" element={<NotificationDetails />} />
+
+          {/* Blogs */}
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
+
 
         </>
         {/* ) : ( */}

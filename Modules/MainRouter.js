@@ -5,13 +5,14 @@ const ProductsController = require('./Controllers/ProductsController')
 const OrdersController = require('./Controllers/OrdersController')
 const PaymentController = require('./Controllers/PaymentController')
 const CartController = require('./Controllers/CartController')
-
+const blogController = require('./Controllers/BlogController')
 // const Middlewares = require('./Middlewares')
 
 const UserRoutes = express.Router()
 const ProductRoutes = express.Router()
 const OrderRoutes = express.Router()
 const PaymentRoutes = express.Router()
+const blogRoutes = express.Router()
 
 UserRoutes
     .post('/register', UsersController.UserRegistration)
@@ -44,4 +45,8 @@ PaymentRoutes
     // .post('/place-order', PaymentController.OrderPayment)
     // .post('/order/validate', PaymentController.ValidateOrder)
 
-module.exports = { UserRoutes, ProductRoutes, OrderRoutes, PaymentRoutes }
+
+blogRoutes
+    .get('/blogs', blogController.getBlogs)
+    .get('/blog/:id', blogController.getSingleBlog)
+module.exports = { UserRoutes, ProductRoutes, OrderRoutes, PaymentRoutes ,blogRoutes}

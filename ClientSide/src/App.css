@@ -15,3 +15,119 @@ body{
         margin: 100px 10px
     }
 }
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  .blog-title {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+    color: #343a40;
+  }
+  
+  .blog-subtitle {
+    font-family: 'Merriweather', serif;
+    font-weight: 400;
+    color: #6c757d;
+  }
+ 
+  .blog-category {
+    font-family: 'Merriweather', sans-serif;
+    font-weight: 600;
+    color: #17a2b8;
+    font-size: 30vh;
+  }
+  
+  .blog-author {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+  }
+  
+  .blog-content {
+    /* font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    color: #343a40; */
+    line-height: 1.6;
+  }
+  
+  .blog-images img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .blog-points {
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  .point-title {
+    font-weight: 600;
+    color: #343a40;
+  }
+  
+  .subpoints-list {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  
+  .subpoint-item {
+    font-weight: 400;
+    color: #6c757d;
+  }
+  
+
+
+  /* Blogs.css */
+
+.nav-tabs {
+  display: none; /* Hide nav-tabs by default */
+}
+
+@media (min-width: 768px) {
+  .nav-tabs {
+    display: flex; /* Show nav-tabs on larger screens */
+  }
+  .dropdown {
+    display: none; /* Hide dropdown on larger screens */
+  }
+}
+
+.dropdown-menu {
+  display: none; /* Hide dropdown-menu by default */
+  position: absolute;
+  background-color: #444;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  margin-right: 45vh;
+}
+
+.dropdown-menu.show {
+  margin-left: -5vh;
+  display: block; /* Show dropdown-menu when dropdownOpen is true */
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  background-color: #444;
+  
+}
+
+.dropdown-item:hover,
+.dropdown-item.active {
+  background-color: #555;
+}
+
+.dropdown-toggle {
+  background-color: #050a30;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+}
