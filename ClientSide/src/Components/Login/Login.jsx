@@ -4,7 +4,8 @@ import './Login.css';
 import { URL } from '../Auth/Auth';
 import { useAuth } from "../Auth/AuthContext";
 import Loader from "../Loader/Loader"
- 
+import PhoneOTP from "./PhoneOTPVerification/PhoneOTP";
+
 function Login() {
     const navigate = useNavigate();
     const { setToken } = useAuth();
@@ -20,6 +21,12 @@ function Login() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [OTPIsVerified, setOTPIsVerified] = useState(false);
+
+    useEffect(() => {
+        console.log(OTPIsVerified);
+    }, [OTPIsVerified])
+
 
     const handlePhoneNumberChange = (event) => {
         setPhoneNumber(event.target.value);
@@ -70,17 +77,21 @@ function Login() {
                         <form className="form-container mt-2 login-form-container" onSubmit={loginSubmitHandler}>
                             <h1>Login</h1>
 
-                            <div className="mb-3">
-                                <label htmlFor="phone_number" className="form-label">Phone Number</label>
-                                <input
-                                    type="text"
-                                    className="form-control login-form-control"
-                                    id="inputEmail3"
-                                    placeholder="Enter your Phone Number"
-                                    onChange={handlePhoneNumberChange}
-                                    value={phoneNumber}
-                                />
-                            </div>
+                            {/* <PhoneOTP
+                                phoneNumber={phoneNumber}
+                                handlePhoneNumberChange={handlePhoneNumberChange}
+                                // OTPIsVerified={setOTPIsVerified}
+                            /> */}
+
+                            <input
+                                type="text"
+                                className="form-control login-form-control"
+                                id="inputEmail3"
+                                placeholder="+91 xxxxxxxxxx"
+                                onChange={(e) => handlePhoneNumberChange(e)}
+                                value={phoneNumber}
+                                required
+                            />
 
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Password</label>

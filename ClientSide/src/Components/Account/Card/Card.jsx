@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Card.css'
 
+import { MdVerifiedUser } from "react-icons/md";
+import { GoUnverified } from "react-icons/go";
+
 export default function Card(props) {
     const navigate = useNavigate()
     const [hovered, setHovered] = useState(-1);
@@ -33,9 +36,13 @@ export default function Card(props) {
                             <p className="d-inline mx-auto">{product.seller.seller_company}</p>
                             {
                                 product.seller.is_seller_verified ?
-                                    <p className="d-inline mx-auto">✅</p>
+                                    <p className="d-inline mx-auto">
+                                        <MdVerifiedUser size={20} color="#4dff00" />
+                                    </p>
                                     :
-                                    <p className="d-inline mx-auto">❌</p>
+                                    <p className="d-inline mx-auto">
+                                        <GoUnverified size={20} color="#ff1100" />
+                                    </p>
                             }
                         </div>
 
