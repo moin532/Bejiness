@@ -6,7 +6,8 @@ const path = require('path')
 const { UserRoutes, 
     ProductRoutes, 
     OrderRoutes,
-    PaymentRoutes
+    PaymentRoutes,
+    blogRoutes
 } = require('./Modules/MainRouter');
 
 const app = express()
@@ -41,6 +42,7 @@ app.use('/api/users', UserRoutes)
 app.use('/api/products', ProductRoutes)
 app.use('/api/orders', OrderRoutes)
 app.use('/api/payment', PaymentRoutes)
+app.use('/api/v1',blogRoutes)
 
 app.get('*', (req, res) => {
     return res.sendFile(path.join(buildPath, '/index.html'));
