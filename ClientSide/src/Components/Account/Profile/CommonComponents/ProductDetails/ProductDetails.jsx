@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { BsFillImageFill } from "react-icons/bs";
+import { useParams } from "react-router-dom";
 import PageLayout from "../../../PageLayout/PageLayout";
 import { AddItem, GetProduct } from "../../../../ApiCallModules/Apis";
 import { URL } from "../../../../Auth/Auth";
@@ -103,7 +102,7 @@ function ProductDetails() {
                             }`}
                         >
                           <img
-                            src={URL + image}
+                            src={image}
                             className="carousel-image"
                             alt={`Product Image ${index + 1}`}
                           />

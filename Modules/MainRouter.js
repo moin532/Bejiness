@@ -29,6 +29,7 @@ UserRoutes
 ProductRoutes
     .get('/seller', ProductsController.GetSellerProducts)
     .post('/category', ProductsController.GetCategory)
+    .get('/search', ProductsController.SearchProducts)
     .post('/upload', ProductsController.UploadProduct)
     .get('/:productId', ProductsController.GetProduct)
     .put('/:productId', ProductsController.UpdateProduct)

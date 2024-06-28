@@ -2,10 +2,22 @@
   background-color: #050a30 !important;
 }
 
-
 .search-bar-container {
   width: 100%;
   justify-content: space-between;
+}
+
+.nav-search-button{
+  background-color: white;
+  color: blue;
+  border: 1px solid blue;
+  transition: .5s;
+}
+
+.nav-search-button:hover{
+  background-color: blue;
+  color: white;
+  border: 1px solid white;
 }
 
 @media (min-width: 992px) {

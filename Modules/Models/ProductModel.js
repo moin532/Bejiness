@@ -31,17 +31,17 @@ const productSchema = new Schema({
     default: true
   },
   specs: [{
-    key:{
-      type:String
+    key: {
+      type: String
     },
-    value:{
-      type:String
+    value: {
+      type: String
     }
   }],
   categoryType: {
     type: String
   },
- images: [],
+  images: [],
   sellerId: {
     type: Schema.Types.ObjectId,
     ref: 'Seller',
@@ -53,4 +53,4 @@ const productSchema = new Schema({
 const Product = db.model('Product', productSchema);
 
 module.exports = Product;
- 
+
