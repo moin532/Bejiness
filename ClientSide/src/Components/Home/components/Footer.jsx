@@ -11,31 +11,31 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-3">
             <h4>Follow us on</h4>
-            <div class="wrapper">
+            <div className="wrapper">
               
-              <Link href="#" class="icon facebook">
-                <div class="tooltip">Facebook</div>
-                <span><i class="fab fa-facebook-f"></i></span>
+              <Link href="#" className="icon facebook">
+                <div className="tooltip">Facebook</div>
+                <span><i className="fab fa-facebook-f"></i></span>
               </Link>
               
-              {/* <Link href="#" class="icon twitter">
-                <div class="tooltip">Twitter</div>
-                <span><i class="fab fa-twitter"></i></span>
+              {/* <Link href="#" className="icon twitter">
+                <div className="tooltip">Twitter</div>
+                <span><i className="fab fa-twitter"></i></span>
               </Link> */}
               
-              <Link href="#" class="icon instagram">
-                <div class="tooltip">Instagram</div>
-                <span><i class="fab fa-instagram"></i></span>
+              <Link href="#" className="icon instagram">
+                <div className="tooltip">Instagram</div>
+                <span><i className="fab fa-instagram"></i></span>
               </Link>
 
-              {/* <Link href="#" class="icon github">
-                <div class="tooltip">Github</div>
-                <span><i class="fab fa-github"></i></span>
+              {/* <Link href="#" className="icon github">
+                <div className="tooltip">Github</div>
+                <span><i className="fab fa-github"></i></span>
               </Link> */}
               
-              {/* <Link href="#" class="icon youtube">
-                <div class="tooltip">Youtube</div>
-                <span><i class="fab fa-youtube"></i></span>
+              {/* <Link href="#" className="icon youtube">
+                <div className="tooltip">Youtube</div>
+                <span><i className="fab fa-youtube"></i></span>
               </Link> */}
             </div>
           </div>

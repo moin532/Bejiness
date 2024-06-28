@@ -2,12 +2,6 @@ const mongoose = require('mongoose');
 const db = require('./MainDatabaseConnector')
 
 
-// const SubpointSchema = new mongoose.Schema({
-//     text: {
-//       type: String,
-//     }
-//   });
-  
   const PointSchema = new mongoose.Schema({
     _id: false, 
     point: {
@@ -43,7 +37,9 @@ const BlogsSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    metaDescription: String,
+    metaKeywords: String,
 }) 
 
 const Blog = db.model('Blogs', BlogsSchema);

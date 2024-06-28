@@ -23,7 +23,6 @@ import Notification from './Components/Account/Profile/Seller/Notification/Notif
 import NotificationDetails from './Components/Account/Profile/Seller/Notification/NotificationDetails/NotificationDetails'
 import Blog from './Components/Blog/Blog'
 import BlogDetail from './Components/Blog/BlogDetails'
-
 function App() {
   const { hasToken } = useAuth();
 
@@ -34,6 +33,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        {/* <Route path="/post_requirements" element={<PostRequirement />} /> */}
 
         {/* {
           (hasToken) ? ( */}
@@ -55,7 +55,7 @@ function App() {
 
           {/* Blogs */}
           <Route path="/blogs" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogDetail />} />
+          <Route path="/blog/:title/:id" element={<BlogDetail />} />
 
 
         </>

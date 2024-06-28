@@ -16,7 +16,10 @@ export default function Join() {
           {/* Button Div (40% width) */}
           <div className="col-md-5 d-flex align-items-center justify-content-center">
 
-            <Link to="/signup">
+            <Link 
+              to="/signup"
+              style={{textDecoration: 'none'}}
+            >
               <button className="btn btn-lg join-btn">Join Us
 
                 <lord-icon
