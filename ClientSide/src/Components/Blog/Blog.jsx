@@ -35,27 +35,27 @@ const Blog = () => {
 
   useEffect(() => {
     const getBlogs = async () => {
-      setIsLoading(true);
-      await fetch(URL + "/api/v1/blogs", {
-        method: "GET",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setBlog(data.Allblogs);
-          setIsLoading(false);
-          if (data.Allblogs.length > 0) {
-            setUrlTitle(data.Allblogs[0].title);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsLoading(false);
-          alert(err.message);
-          console.log(err.message);
+      try {
+        setIsLoading(true);
+        const response = await fetch(URL + "/api/v1/blogs", {
+          method: "GET",
         });
+        const data = await response.json();
+        setBlog(data.Allblogs);
+        if (data.Allblogs.length > 0) {
+          setUrlTitle(data.Allblogs[0].title);
+        }
+      } catch (err) {
+        console.log(err);
+        alert(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
+  
     getBlogs();
   }, []);
+  
 
   const filteredBlogs = selectedCategory === "All Industries"
     ? blog
